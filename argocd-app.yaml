@@ -8,7 +8,7 @@ spec:
     namespace: default
     server: https://kubernetes.default.svc
   source:
-    repoURL: 'https://github.com/yourusername/sample-app.git'  # Replace with your repository URL
+    repoURL: 'https://github.com/k-nisum-dev/sample-app.git'  # Replace with your repository URL
     targetRevision: HEAD
     path: chart
   project: default
