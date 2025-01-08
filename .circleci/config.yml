@@ -1,0 +1,32 @@
+version: 2.1
+
+executors:
+  kubernetes-executor:
+    docker:
+      - image: circleci/python:3.8
+    working_directory: ~/repo
+
+jobs:
+  deploy:
+    executor: kubernetes-executor
+    steps:
+      - checkout
+      - run:
+          name: Set up kubectl
+          command: |
+            echo $KUBE_CONFIG > ~/.kube/config
+            kubectl config set-context --current --namespace=default
+      - run:
+          name: Install Helm
+          command: |
+            curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+      - run:
+          name: Helm upgrade
+          command: |
+            helm upgrade --install sample-app ./chart
+
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - deploy
